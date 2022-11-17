@@ -1,5 +1,5 @@
-from src.bwatch_python.data.customer.crud.customer import crud_customer
-from src.bwatch_python.data.transaction.crud.transaction import crud_transaction
+from bwatch_python.data.customer.crud.customer import crud_customer
+from bwatch_python.data.transaction.crud.transaction import crud_transaction
 from bwatch_python.data.customer.schema.cusotmer_data import Customer
 from bwatch_python.data.transaction.schema.transaction import Transaction
 from .core.data_mapper import data_mapper

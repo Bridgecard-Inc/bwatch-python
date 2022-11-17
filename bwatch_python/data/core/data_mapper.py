@@ -1,5 +1,6 @@
 from .error import InvalidRequest
 
+
 def data_mapper(data: dict, mapping: dict):
     bwatch_data = {}
     for key in mapping:

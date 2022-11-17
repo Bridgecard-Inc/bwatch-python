@@ -1,15 +1,11 @@
 from base64 import b64encode
 import os
 from typing import Any, Dict, Optional
-# from src.schema.base import EnvironmentEnum
 from schema.transaction import Transaction
-from src.bwatch_python.data.utils import constants
+from bwatch_python.data.utils import constants
 
 from firebase_admin import auth
 from ...core.crud_base import CRUDBase
-
-from src.bwatch_python.data.database.db import root_db
-
 
 class CRUDTransaction(CRUDBase):
     def __init__(self, path: str):
