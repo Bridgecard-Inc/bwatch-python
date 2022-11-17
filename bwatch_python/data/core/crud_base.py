@@ -1,9 +1,8 @@
 from typing import Any, Dict, List, Optional, TypeVar, Union
 
-from src.bwatch_python.data.database.db import *
+from bwatch_python.data.database.db import bwatch_data_db
 from firebase_admin import auth
 
-from src.bwatch_python.data.utils.methods import sortMonthList
 
 
 class CRUDBase:

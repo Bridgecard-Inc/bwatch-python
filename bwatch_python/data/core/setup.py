@@ -14,9 +14,9 @@ from starlette.exceptions import ExceptionMiddleware
 from starlette.middleware.cors import CORSMiddleware
 from starlette.routing import Mount
 
-from src.api.api import router
-from src.core.error import exception_handlers
-from src.core.config import settings
+from api.api import router
+from core.error import exception_handlers
+from core.config import settings
 
 from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
 import sentry_sdk
