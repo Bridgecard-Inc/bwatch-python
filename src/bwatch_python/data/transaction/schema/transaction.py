@@ -30,7 +30,7 @@ class TransactionDataHistory(BaseModel):
     details_update_history: str
 
 
-class TransactionDetails(BaseModel):
+class Transaction(BaseModel):
     transaction_payment_data: TransactionPaymentData
     transaction_amount_data: TransactionAmountData
     transaction_status_data: TransactionStatusData
