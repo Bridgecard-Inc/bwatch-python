@@ -2,19 +2,21 @@ from base64 import b64encode
 import os
 from typing import Any, Dict, Optional
 # from src.schema.base import EnvironmentEnum
-from schema.cusotmer_data import Customer
-from src.bwatch_python.data.utils import constants
+from  schema.cusotmer_data import Customer
+from .data.utils import constants
 
 from firebase_admin import auth
 from ...core.crud_base import CRUDBase
 
-from src.bwatch_python.data.database.db import root_db
+from bwatch_python.data.database.db import bwatch_data_db
+
+from bwatch_python import bwatch_python
 
 
 class CRUDCustomer(CRUDBase):
     def __init__(self, path: str):
         """CRUD object with default methods to Create, Read, Update, Delete (CRUD)."""
-        self.db_ref = super().__init__(path)
+        self.db_ref = bwatch_data_db.child(bwatch_python.__get_app_id())
 
     def create(self, *, obj_in: Customer) -> Dict:
         """

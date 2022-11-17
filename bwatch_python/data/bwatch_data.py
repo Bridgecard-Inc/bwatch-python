@@ -1,5 +1,5 @@
-from src.bwatch_python.data.customer.crud.customer import crud_customer
-from bwatch_python.data.customer.schema.cusotmer_data import Customer
+from .customer.schema.cusotmer_data import Customer
+from .customer.crud.customer import crud_customer
 
 
 def create_customer(data: dict, mapping: dict):

@@ -26,7 +26,7 @@ class CustomerIdentityData(BaseModel):
 class CustomerDataHistory(BaseModel):
     created_at: str
     updated_at: Optional[str]
-    update_history: Dict[str:Any]
+    update_history: Dict
 
 
 class Customer(BaseModel):
