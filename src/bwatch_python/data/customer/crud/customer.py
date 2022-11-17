@@ -6,7 +6,7 @@ from schema.cusotmer_data import Customer
 from src.bwatch_python.data.utils import constants
 
 from firebase_admin import auth
-from .base import CRUDBase
+from ...core.crud_base import CRUDBase
 
 from src.bwatch_python.data.database.db import root_db
 
