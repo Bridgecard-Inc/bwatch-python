@@ -5,7 +5,6 @@ from .base_type_schema import (
 
 
 class TransactionPaymentData(BaseModel):
-    id: str
     payment_method: PaymentMethodDataEnum
     payment_type: PaymentTypeDataEnum
     source_payment_location: LocationData
@@ -31,6 +30,7 @@ class TransactionDataHistory(BaseModel):
 
 
 class Transaction(BaseModel):
+    id: str
     transaction_payment_data: TransactionPaymentData
     transaction_amount_data: TransactionAmountData
     transaction_status_data: TransactionStatusData
