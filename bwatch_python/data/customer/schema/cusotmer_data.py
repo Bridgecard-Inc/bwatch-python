@@ -3,7 +3,6 @@ from pydantic import BaseModel
 
 
 class CustomerData(BaseModel):
-    id: str
     first_name: str
     last_name: str
     middle_name: str
@@ -30,6 +29,7 @@ class CustomerDataHistory(BaseModel):
 
 
 class Customer(BaseModel):
+    id: str
     customer_data: CustomerData
     customer_banking_data: CustomerBankingData
     customer_identity_data: CustomerIdentityData

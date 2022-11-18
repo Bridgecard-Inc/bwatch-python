@@ -1,6 +1,5 @@
 from typing import Any, Dict, List, Optional, TypeVar, Union
 
-from bwatch_python.data.database.db import bwatch_data_db
 from firebase_admin import auth
 
 
@@ -11,7 +10,7 @@ class CRUDBase:
         CRUD object with default methods to Create, Read, Update, Delete (CRUD).
 
         """
-        self.db_ref = bwatch_data_db
+        self.db_ref = ""
 
         return self.db_ref
 
