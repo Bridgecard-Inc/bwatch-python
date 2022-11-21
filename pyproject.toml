@@ -1,21 +1,28 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[project]
+[tool.poetry]
 name = "bwatch-python"
-version = "0.0.1"
-authors = [
-  { name="Bridgecard", email="contact@bridgecard.co" },
-]
+version = "0.1.0"
+authors = ["Bridgecard <engineerin@bridgecard.co>"]
 description = "Bwatch is an internal transaction monitoring service for fraudulent transactions in realtime."
 readme = "README.md"
-requires-python = ">=3.7"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+packages = [{include = "bwatch_python"}]
+
+[tool.poetry.dependencies]
+python = ">=3.7,<4"
+sseclient = "^0.0.27"
+requests = "^2.28.1"
+aioredis = "2.0.0"
+starlette = "^0.22.0"
+pydantic = "^1.10.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
 [project.urls]
 "Homepage" = "https://github.com/pypa/bwatch-python"

@@ -1,0 +1,16 @@
+ISSUING_TRANSACTIONS_CHILD_NODE_PATH_NAME = "issuing_transactions"
+ISSUING_TRANSACTIONS_CREDIT_TYPE = "CREDIT"
+ISSUING_TRANSACTIONS_DEBIT_TYPE = "DEBIT"
+IS_DEDICATED_SUPER_ADMIN_NODE_NAME = "is_dedicated_super_admin"
+BRIDGECARD_MAINTENANCE_FEE = "300"
+BASE_URL = "https://bridgecard-issuing-admin-auth-service-vbdndeke7q-uc.a.run.app"
+VIRTUAL_ACCOUNT_SERVICE_BASE_URL = "https://vps.providusbank.com/vps/api/"
+TEAM_MEMBERS_CHILD_NODE_PATH_NAME = "team_members"
+EMAIL_SERVICE_BASE_URL = "https://us-central1-bridgecard-issuing.cloudfunctions.net/cloudFunctionsApiService/api"
+FLW_SERVICE_BASE_API = "https://api.flutterwave.com"
+FX_SWAP_ACCOUNT_NUMBER = "9983473515"
+FX_SWAP_BANK_CODE = "101"
+CURRENT_WALLET_PARTNER_BANK_NAME = "PROVIDUSBANK PLC"
+FX_SERVICE_BASE_URL = "https://api.useoval.com"
+DEFAULT_USD_TO_NGN_RATE = 761
+FX_SWAP_SERVICE_CHARGE = 100
