@@ -215,7 +215,7 @@ class BWatchAsgiMiddleware(BaseHTTPMiddleware):
                         )
 
                         api_helper.post(
-                            url=f"http://127.0.0.1:5089/v1/fraudulent_customers/{bwatch_python_data_context.app_id}/{id_to_track_on_middleware}",
+                            url=f"https://bwatch-decision-service-vbdndeke7q-uc.a.run.app/v1/fraudulent_customers/{bwatch_python_data_context.app_id}/{id_to_track_on_middleware}",
                             data={},
                         )
 
