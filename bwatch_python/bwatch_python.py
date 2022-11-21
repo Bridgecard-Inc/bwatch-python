@@ -5,7 +5,7 @@ from .utils import db_stream
 from .utils.bwatch_data_context import bwatch_python_data_context
 
 
-def init(app_id: str):
+def init(app_id: str, middleware_data : dict, data_mappers : dict):
     """
     Initialises Bwatch package.
 
@@ -17,10 +17,26 @@ def init(app_id: str):
 
     bwatch_python_data_context.fraudulent_customers_dict = {}
 
+    url_to_track_on_middleware = middleware_data.get("url_to_track_on_middleware")
+
+    id_to_track_on_middleware = middleware_data.get("id_to_track_on_middleware")
+
+    bwatch_python_data_context.url_to_track_on_middleware = url_to_track_on_middleware
+
+    bwatch_python_data_context.id_to_track_on_middleware = id_to_track_on_middleware
+
+    customers_data_mappers = data_mappers.get("customers")
+
+    transactions_data_mappers = data_mappers.get("transactions")
+
+    bwatch_python_data_context.customers_data_mappers = customers_data_mappers
+
+    bwatch_python_data_context.transactions_data_mappers = transactions_data_mappers
+
     high_urgency_usecase_rules_dict_URL = f"https://bwatch-admin-database.firebaseio.com/rules/{app_id}/HIGH"
     S = db_stream.subscriber(high_urgency_usecase_rules_dict_URL, __handle_stream_high_urgency_usecase_rules_dict)
 
-    fraudulent_customers_dict_URL = f"https://bwatch-admin-database.firebaseio.com/fraudulent_customers"
+    fraudulent_customers_dict_URL = f"https://bwatch-admin-database.firebaseio.com/fraudulent_customers/{app_id}"
     T = db_stream.subscriber(fraudulent_customers_dict_URL, __handle_stream_fraudulent_customers_dict)
 
     S.start()

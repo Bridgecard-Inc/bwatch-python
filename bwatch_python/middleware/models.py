@@ -1,5 +1,6 @@
-from typing import Dict, Optional
+from typing import Any, Dict, Optional
 from pydantic import BaseModel
+from enum import Enum
 
 
 class EnvironmentDetails(BaseModel):
@@ -21,4 +22,30 @@ class SessionProperties(BaseModel):
     body: Optional[Dict[str, str]]
 
 
+class RuleParameterEnum(str, Enum):
 
+    DATA_COMPARISON_EQUAL_TO = "DATA_COMPARISON_EQUAL_TO"
+    DATA_COMPARISON_NOT_EQUAL_TO = "DATA_COMPARISON_NOT_EQUAL_TO"
+    DATA_MATCH_GREATER_THAN = "DATA_MATCH_GREATER_THAN"
+    DATA_MATCH_LESS_THAN = "DATA_MATCH_LESS_THAN"
+    DATA_COMPARISON_EXISTS_IN = "DATA_MATCH_EXISTS_IN"
+    DATA_COMPARISON_EXISTS_NOT_IN = "DATA_MATCH_EXISTS_NOT_IN"
+    DATA_VELOCITY = "DATA_VELOCITY"
+
+
+class RuleUrgencyEnum(str, Enum):
+
+    HIGH = "HIGH"
+    MEDIUM = "MEDIUM"
+    LOW = "LOW"
+
+
+class Rule(BaseModel):
+    app_id: str
+    created_at: int
+    key: str
+    description: str
+    parameter: RuleParameterEnum
+    value: Any
+    urgency: RuleUrgencyEnum
+    risk_score: int

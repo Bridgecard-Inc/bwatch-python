@@ -1,16 +1,22 @@
-from bwatch_python.data.customer.crud.customer import crud_customer
-from bwatch_python.data.transaction.crud.transaction import crud_transaction
 from bwatch_python.data.customer.schema.cusotmer_data import Customer
 from bwatch_python.data.transaction.schema.transaction import Transaction
-from .core.data_mapper import data_mapper
+from bwatch_python.utils.api_helper import ApiHelper
+from ..utils.methods import data_mapper
+from ..utils.bwatch_data_context import bwatch_python_data_context
+
+api_helper = ApiHelper(token="")
 
 
 def create_customer(data: dict, mapping: dict):
-    mapped_customer = data_mapper(data=data, mapping=mapping)
+    mapped_customer = data_mapper(data=data, mapping=bwatch_python_data_context.customers_data_mappers)
     customer = Customer(**mapped_customer)
-    result = crud_customer.create(obj_in=customer)
 
-    if not result:
+    response = api_helper.post(
+        url=f"https://bwatch-data-service-vbdndeke7q-uc.a.run.app/v1/bwatch_service/create-customer/{bwatch_python_data_context.app_id}",
+        data=customer.dict(),
+    )
+
+    if not response:
         return {
             "message": "failed"
         }
@@ -19,14 +25,23 @@ def create_customer(data: dict, mapping: dict):
         "message": "success"
     }
 
+
 def create_transaction(data:dict,mapping:dict):
-    mapped_transaction = data_mapper(data=data,mapping=mapping)
+    mapped_transaction = data_mapper(data=data,mapping=bwatch_python_data_context.transactions_data_mappers)
 
     transaction = Transaction(**mapped_transaction)
-    result = crud_transaction.create(transaction)
+
+    print(transaction)
+
+    response = api_helper.post(
+        url=f"https://bwatch-data-service-vbdndeke7q-uc.a.run.app/v1/bwatch_service/create-transaction/{bwatch_python_data_context.app_id}",
+        data=transaction.dict(),
+    )
+
+    print(response)
 
     
-    if not result:
+    if not response:
             return {
                 "message": "failed"
             }
