@@ -19,7 +19,7 @@ class SessionProperties(BaseModel):
     path_params: Optional[Dict[str, str]]
     client: Dict[str, str]
     cookies: Optional[Dict[str, str]]
-    body: Optional[Dict[str, str]]
+    body: Optional[Dict[str, Any]]
 
 
 class RuleParameterEnum(str, Enum):

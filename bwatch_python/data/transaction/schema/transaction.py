@@ -1,9 +1,15 @@
+from enum import Enum
 from pydantic import BaseModel
 from .base_type_schema import (
     PaymentTypeDataEnum, PaymentMethodDataEnum, LocationData, CardData, BankingData
 )
 
+class TransactionStatusDataEnum(str, Enum):
 
+    COMPLETED = "COMPLETED"
+    PENDING = "PENDING"
+
+    
 class TransactionPaymentData(BaseModel):
     payment_method: PaymentMethodDataEnum
     payment_type: PaymentTypeDataEnum
@@ -20,7 +26,7 @@ class TransactionAmountData(BaseModel):
 
 
 class TransactionStatusData(BaseModel):
-    status: str
+    status: TransactionStatusDataEnum
 
 
 class TransactionDataHistory(BaseModel):
