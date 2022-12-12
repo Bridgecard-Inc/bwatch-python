@@ -80,7 +80,12 @@ def __handle_stream_high_urgency_usecase_rules_dict(data: any):
     if len(path_list) == 0:
 
         if data is not None:
-            bwatch_python_data_context.high_urgency_usecase_rules_dict.update(data)
+
+            high_urgency_usecase_rules_dict = bwatch_python_data_context.high_urgency_usecase_rules_dict
+
+            high_urgency_usecase_rules_dict.update(data)
+
+            bwatch_python_data_context.high_urgency_usecase_rules_dict = high_urgency_usecase_rules_dict
 
     # Handle item deleted event ('put', {'path': '/-NH6Q9QiEUOZ7p7Svh1j', 'data': None})
 
@@ -88,7 +93,11 @@ def __handle_stream_high_urgency_usecase_rules_dict(data: any):
 
         key = path_list[0]
 
-        bwatch_python_data_context.high_urgency_usecase_rules_dict.pop(key)
+        high_urgency_usecase_rules_dict = bwatch_python_data_context.high_urgency_usecase_rules_dict
+
+        high_urgency_usecase_rules_dict.pop(key)
+
+        bwatch_python_data_context.high_urgency_usecase_rules_dict = high_urgency_usecase_rules_dict
 
     # Handle item updated event ('put', {'path': '/-NH6Q7PCCWU8P1JBgoev/created_at', 'data': 1668719845})
 
@@ -100,9 +109,13 @@ def __handle_stream_high_urgency_usecase_rules_dict(data: any):
 
         value = data
 
-        bwatch_python_data_context.high_urgency_usecase_rules_dict.get(key)[
+        high_urgency_usecase_rules_dict = bwatch_python_data_context.high_urgency_usecase_rules_dict
+
+        high_urgency_usecase_rules_dict.get(key)[
             field
         ] = value
+
+        bwatch_python_data_context.high_urgency_usecase_rules_dict = high_urgency_usecase_rules_dict
 
     return
 
@@ -126,6 +139,11 @@ def __handle_stream_fraudulent_customers_dict(data: any):
     if len(path_list) == 0:
 
         if data is not None:
-            bwatch_python_data_context.fraudulent_customers_dict.update(data)
+
+            fraudulent_customers_dict = bwatch_python_data_context.fraudulent_customers_dict
+
+            fraudulent_customers_dict.update(data)
+
+            bwatch_python_data_context.fraudulent_customers_dict = fraudulent_customers_dict
 
     return
