@@ -162,6 +162,8 @@ def process_as_middleware(session: SessionProperties):
 
                             if rule_comparison_value == rule.value:
 
+                                print("RuleParameterEnum.DATA_COMPARISON_EQUAL_TO")
+
                                 total_risk_score += int(rule.risk_score)
 
                         elif (
@@ -170,6 +172,8 @@ def process_as_middleware(session: SessionProperties):
                         ):
 
                             if rule_comparison_value != rule.value:
+
+                                print("RuleParameterEnum.DATA_COMPARISON_NOT_EQUAL_TO")
 
                                 total_risk_score += int(rule.risk_score)
 
@@ -180,11 +184,15 @@ def process_as_middleware(session: SessionProperties):
 
                             if int(rule_comparison_value) > int(rule.value):
 
+                                print("RuleParameterEnum.DATA_MATCH_GREATER_THAN")
+
                                 total_risk_score += int(rule.risk_score)
 
                         elif rule.parameter == RuleParameterEnum.DATA_MATCH_LESS_THAN:
 
                             if int(rule_comparison_value) < int(rule.value):
+
+                                print("RuleParameterEnum.DATA_MATCH_LESS_THAN")
 
                                 total_risk_score += int(rule.risk_score)
 
@@ -195,6 +203,8 @@ def process_as_middleware(session: SessionProperties):
 
                             if rule_comparison_value in rule.value:
 
+                                print("RuleParameterEnum.DATA_COMPARISON_EXISTS_IN")
+
                                 total_risk_score += int(rule.risk_score)
 
                         elif (
@@ -204,13 +214,15 @@ def process_as_middleware(session: SessionProperties):
 
                             if rule_comparison_value not in rule.value:
 
+                                print("RuleParameterEnum.DATA_COMPARISON_EXISTS_NOT_IN")
+
                                 total_risk_score += int(rule.risk_score)
 
                         else:
 
                             continue
 
-                # print(total_risk_score / total_rules_count)
+                print(total_risk_score / total_rules_count)
 
                 if int(total_risk_score / total_rules_count) > 70:
 
