@@ -243,4 +243,4 @@ def process_as_middleware(session: SessionProperties):
 
                     return response
 
-    response = None
+    return None
