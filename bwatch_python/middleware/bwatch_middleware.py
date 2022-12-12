@@ -184,6 +184,8 @@ def process_as_middleware(session: SessionProperties):
 
                             if int(rule_comparison_value) > int(rule.value):
 
+                                print(rule_comparison_value, rule.value)
+
                                 print("RuleParameterEnum.DATA_MATCH_GREATER_THAN")
 
                                 total_risk_score += int(rule.risk_score)
