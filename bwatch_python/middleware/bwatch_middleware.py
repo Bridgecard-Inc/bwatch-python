@@ -69,13 +69,19 @@ class BWatchAsgiMiddleware(BaseHTTPMiddleware):
 
         print(session.url)
 
+        print(bwatch_python_data_context.url_to_track_on_middleware)
+
         enivronment = EnvironmentDetails(
             language="Python", version="", package="FASTAPI", other_details={}
         )
 
         # print(session.dict())
 
-        response = process_as_middleware(session=session)
+        if session.url == bwatch_python_data_context.url_to_track_on_middleware:
+
+            response = process_as_middleware(session=session)
+
+            print(f"response-{response}")
 
         if response is not None:
 
@@ -94,7 +100,7 @@ def process_as_middleware(session: SessionProperties):
 
     id_to_track_on_middleware = session.body.get(id_to_track_on_middleware)
 
-    print(fraudulent_customers_dict)
+    print(f"fraudulent_customers_dict-{fraudulent_customers_dict}")
 
     if id_to_track_on_middleware in fraudulent_customers_dict:
 
@@ -110,143 +116,141 @@ def process_as_middleware(session: SessionProperties):
 
     else:
 
-        if session.url == bwatch_python_data_context.url_to_track_on_middleware:
+        create_transaction(
+            session.body,
+            mapping=bwatch_python_data_context.transactions_data_mappers,
+        )
 
-            create_transaction(
-                session.body,
-                mapping=bwatch_python_data_context.transactions_data_mappers,
-            )
+        result = fetch_usecase_rules(
+            rules=bwatch_python_data_context.high_urgency_usecase_rules_dict
+        )
 
-            result = fetch_usecase_rules(
-                rules=bwatch_python_data_context.high_urgency_usecase_rules_dict
-            )
+        usecase_rules = result.get("data")
 
-            usecase_rules = result.get("data")
+        transaction_data_dict = data_mapper(
+            data=session.body,
+            mapping=bwatch_python_data_context.transactions_data_mappers,
+        )
 
-            transaction_data_dict = data_mapper(
-                data=session.body,
-                mapping=bwatch_python_data_context.transactions_data_mappers,
-            )
+        if usecase_rules:
 
-            if usecase_rules:
+            total_rules_count = len(usecase_rules)
 
-                total_rules_count = len(usecase_rules)
+            total_risk_score = 0
 
-                total_risk_score = 0
+            for rule in usecase_rules:
 
-                for rule in usecase_rules:
+                rule = Rule(**rule)
 
-                    rule = Rule(**rule)
+                rule_key_list = rule.key.split(".")
 
-                    rule_key_list = rule.key.split(".")
+                rule_comparison_value = 0
 
-                    rule_comparison_value = 0
+                if rule_key_list[0] == "transactions":
 
-                    if rule_key_list[0] == "transactions":
+                    for key_index in range(len(rule_key_list)):
 
-                        for key_index in range(len(rule_key_list)):
-
-                            if key_index == 0:
-
-                                continue
-
-                            elif key_index == 1:
-
-                                rule_comparison_value = transaction_data_dict.get(
-                                    rule_key_list[key_index].lstrip().rstrip()
-                                )
-
-                            else:
-
-                                rule_comparison_value = rule_comparison_value.get(
-                                    rule_key_list[key_index].lstrip().rstrip()
-                                )
-
-                        if rule.parameter == RuleParameterEnum.DATA_COMPARISON_EQUAL_TO:
-
-                            if rule_comparison_value == rule.value:
-
-                                print("RuleParameterEnum.DATA_COMPARISON_EQUAL_TO")
-
-                                total_risk_score += int(rule.risk_score)
-
-                        elif (
-                            rule.parameter
-                            == RuleParameterEnum.DATA_COMPARISON_NOT_EQUAL_TO
-                        ):
-
-                            if rule_comparison_value != rule.value:
-
-                                print("RuleParameterEnum.DATA_COMPARISON_NOT_EQUAL_TO")
-
-                                total_risk_score += int(rule.risk_score)
-
-                        elif (
-                            rule.parameter == RuleParameterEnum.DATA_MATCH_GREATER_THAN
-                        ):
-                            
-
-                            if int(rule_comparison_value) > int(rule.value):
-
-                                print(rule_comparison_value, rule.value)
-
-                                print("RuleParameterEnum.DATA_MATCH_GREATER_THAN")
-
-                                total_risk_score += int(rule.risk_score)
-
-                        elif rule.parameter == RuleParameterEnum.DATA_MATCH_LESS_THAN:
-
-                            if int(rule_comparison_value) < int(rule.value):
-
-                                print("RuleParameterEnum.DATA_MATCH_LESS_THAN")
-
-                                total_risk_score += int(rule.risk_score)
-
-                        elif (
-                            rule.parameter
-                            == RuleParameterEnum.DATA_COMPARISON_EXISTS_IN
-                        ):
-
-                            if rule_comparison_value in rule.value:
-
-                                print("RuleParameterEnum.DATA_COMPARISON_EXISTS_IN")
-
-                                total_risk_score += int(rule.risk_score)
-
-                        elif (
-                            rule.parameter
-                            == RuleParameterEnum.DATA_COMPARISON_EXISTS_NOT_IN
-                        ):
-
-                            if rule_comparison_value not in rule.value:
-
-                                print("RuleParameterEnum.DATA_COMPARISON_EXISTS_NOT_IN")
-
-                                total_risk_score += int(rule.risk_score)
-
-                        else:
+                        if key_index == 0:
 
                             continue
 
-                print(total_risk_score / total_rules_count)
+                        elif key_index == 1:
 
-                if int(total_risk_score / total_rules_count) > 70:
+                            rule_comparison_value = transaction_data_dict.get(
+                                rule_key_list[key_index].lstrip().rstrip()
+                            )
 
-                    session.body = {
-                        "message": "This transaction has been flagged for fruad by our system, please contact card issuer"
-                    }
+                        else:
 
-                    response = Response(
-                        json.dumps(session.body),
-                        media_type="application/json",
-                        status_code=403,
-                    )
+                            rule_comparison_value = rule_comparison_value.get(
+                                rule_key_list[key_index].lstrip().rstrip()
+                            )
 
-                    api_helper.post(
-                        url=f"{constants.BWATCH_DECISION_SERVICE_BASE_URL}/v1/fraudulent_customers/{bwatch_python_data_context.app_id}/{id_to_track_on_middleware}",
-                        data={},
-                    )
+                    if rule.parameter == RuleParameterEnum.DATA_COMPARISON_EQUAL_TO:
 
-                    return response
+                        if rule_comparison_value == rule.value:
+
+                            print("RuleParameterEnum.DATA_COMPARISON_EQUAL_TO")
+
+                            total_risk_score += int(rule.risk_score)
+
+                    elif (
+                        rule.parameter
+                        == RuleParameterEnum.DATA_COMPARISON_NOT_EQUAL_TO
+                    ):
+
+                        if rule_comparison_value != rule.value:
+
+                            print("RuleParameterEnum.DATA_COMPARISON_NOT_EQUAL_TO")
+
+                            total_risk_score += int(rule.risk_score)
+
+                    elif (
+                        rule.parameter == RuleParameterEnum.DATA_MATCH_GREATER_THAN
+                    ):
+                        
+
+                        if int(rule_comparison_value) > int(rule.value):
+
+                            print(rule_comparison_value, rule.value)
+
+                            print("RuleParameterEnum.DATA_MATCH_GREATER_THAN")
+
+                            total_risk_score += int(rule.risk_score)
+
+                    elif rule.parameter == RuleParameterEnum.DATA_MATCH_LESS_THAN:
+
+                        if int(rule_comparison_value) < int(rule.value):
+
+                            print("RuleParameterEnum.DATA_MATCH_LESS_THAN")
+
+                            total_risk_score += int(rule.risk_score)
+
+                    elif (
+                        rule.parameter
+                        == RuleParameterEnum.DATA_COMPARISON_EXISTS_IN
+                    ):
+
+                        if rule_comparison_value in rule.value:
+
+                            print("RuleParameterEnum.DATA_COMPARISON_EXISTS_IN")
+
+                            total_risk_score += int(rule.risk_score)
+
+                    elif (
+                        rule.parameter
+                        == RuleParameterEnum.DATA_COMPARISON_EXISTS_NOT_IN
+                    ):
+
+                        if rule_comparison_value not in rule.value:
+
+                            print("RuleParameterEnum.DATA_COMPARISON_EXISTS_NOT_IN")
+
+                            total_risk_score += int(rule.risk_score)
+
+                    else:
+
+                        continue
+
+            print(total_risk_score / total_rules_count)
+
+            if int(total_risk_score / total_rules_count) > 70:
+
+                session.body = {
+                    "message": "This transaction has been flagged for fruad by our system, please contact card issuer"
+                }
+
+                response = Response(
+                    json.dumps(session.body),
+                    media_type="application/json",
+                    status_code=403,
+                )
+
+                api_helper.post(
+                    url=f"{constants.BWATCH_DECISION_SERVICE_BASE_URL}/v1/fraudulent_customers/{bwatch_python_data_context.app_id}/{id_to_track_on_middleware}",
+                    data={},
+                )
+
+                return response
 
     return None
