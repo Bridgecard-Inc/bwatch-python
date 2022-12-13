@@ -94,6 +94,8 @@ def process_as_middleware(session: SessionProperties):
 
     id_to_track_on_middleware = session.body.get(id_to_track_on_middleware)
 
+    print(fraudulent_customers_dict)
+
     if id_to_track_on_middleware in fraudulent_customers_dict:
 
         session.body = {
