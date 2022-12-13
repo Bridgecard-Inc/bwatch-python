@@ -153,7 +153,7 @@ def __handle_stream_fraudulent_customers_dict(data: any):
 
     elif len(path_list) == 1:
 
-        if data is not None:
+        if data is None:
         
             key = path_list[0]
 
