@@ -144,6 +144,10 @@ def __handle_stream_fraudulent_customers_dict(data: any):
 
             fraudulent_customers_dict.update(data)
 
+            print(fraudulent_customers_dict)
+
             bwatch_python_data_context.fraudulent_customers_dict = fraudulent_customers_dict
+
+            print(bwatch_python_data_context.fraudulent_customers_dict)
 
     return
