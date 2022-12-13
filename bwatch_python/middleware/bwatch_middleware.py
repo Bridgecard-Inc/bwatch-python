@@ -67,6 +67,8 @@ class BWatchAsgiMiddleware(BaseHTTPMiddleware):
             body=dict(jsonbody),
         )
 
+        print(session.url)
+
         enivronment = EnvironmentDetails(
             language="Python", version="", package="FASTAPI", other_details={}
         )
