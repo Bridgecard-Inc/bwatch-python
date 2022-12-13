@@ -99,6 +99,8 @@ def process_as_middleware(session: SessionProperties):
     id_to_track_on_middleware = bwatch_python_data_context.id_to_track_on_middleware
 
     id_to_track_on_middleware = session.body.get(id_to_track_on_middleware)
+    
+    fraudulent_customers_dict = fraudulent_customers_dict.get(bwatch_python_data_context.app_id)
 
     print(f"fraudulent_customers_dict-{fraudulent_customers_dict}")
 
