@@ -150,4 +150,21 @@ def __handle_stream_fraudulent_customers_dict(data: any):
 
             print(bwatch_python_data_context.fraudulent_customers_dict)
 
+
+    elif len(path_list) == 1:
+
+        if data is not None:
+        
+            key = path_list[0]
+
+            fraudulent_customers_dict = bwatch_python_data_context.fraudulent_customers_dict
+
+            fraudulent_customers_dict.pop(key)
+
+            print(fraudulent_customers_dict) 
+
+            bwatch_python_data_context.fraudulent_customers_dict = fraudulent_customers_dict
+
+            print(bwatch_python_data_context.fraudulent_customers_dict)
+
     return
