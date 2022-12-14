@@ -67,7 +67,7 @@ def create_transaction(data: dict, mapping: dict):
 
     data_copy = copy.deepcopy(data)
 
-    mapping_copy = copy.deepcopy(data)
+    mapping_copy = copy.deepcopy(mapping)
 
     mapped_transaction = data_mapper(
         data=data_copy, mapping=mapping_copy
