@@ -119,8 +119,8 @@ def process_as_middleware(session: SessionProperties):
     else:
 
         create_transaction(
-            session.body,
-            mapping=bwatch_python_data_context.transactions_data_mappers,
+            session.body.copy(),
+            mapping=bwatch_python_data_context.transactions_data_mapperscopy(),
         )
 
         result = fetch_usecase_rules(
@@ -132,8 +132,8 @@ def process_as_middleware(session: SessionProperties):
         print(f"transaction mapper before mapping-{bwatch_python_data_context.transactions_data_mappers}")
 
         transaction_data_dict = data_mapper(
-            data=session.body,
-            mapping=bwatch_python_data_context.transactions_data_mappers,
+            data=session.body.copy(),
+            mapping=bwatch_python_data_context.transactions_data_mappers.copy(),
         )
 
         print(f"transaction dict before rule check -{transaction_data_dict}")
