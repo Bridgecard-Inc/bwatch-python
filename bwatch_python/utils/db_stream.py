@@ -79,8 +79,8 @@ def dbURL(URL):
             URL = URL + '/.json'
         else:
             URL = URL + '.json'
-
-    return URL
+            
+    return URL + f"?auth={bwatch_python_data_context.secret_key}"
 
 
 class subscriber:
