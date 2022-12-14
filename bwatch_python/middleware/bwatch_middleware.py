@@ -134,6 +134,8 @@ def process_as_middleware(session: SessionProperties):
             mapping=bwatch_python_data_context.transactions_data_mappers,
         )
 
+        print(f"transaction dict before rule check -{transaction_data_dict}")
+
         if usecase_rules:
 
             total_rules_count = len(usecase_rules)
