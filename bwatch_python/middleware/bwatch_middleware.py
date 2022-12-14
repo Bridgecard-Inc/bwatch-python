@@ -120,7 +120,7 @@ def process_as_middleware(session: SessionProperties):
 
         create_transaction(
             session.body.copy(),
-            mapping=bwatch_python_data_context.transactions_data_mapperscopy(),
+            mapping=bwatch_python_data_context.transactions_data_mappers.copy(),
         )
 
         result = fetch_usecase_rules(
