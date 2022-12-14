@@ -17,6 +17,8 @@ from ..utils.bwatch_data_context import bwatch_python_data_context
 
 from ..data.bwatch_data import create_transaction
 
+import copy
+
 api_helper = ApiHelper()
 
 
@@ -120,9 +122,13 @@ def process_as_middleware(session: SessionProperties):
 
         print(f"transaction mapper before mapping1-{bwatch_python_data_context.transactions_data_mappers}")
 
+        session_copy = copy.deepcopy(session.body)
+
+        transactions_data_mappers_copy = copy.deepcopy(bwatch_python_data_context.transactions_data_mappers)
+
         create_transaction(
-            session.body.copy(),
-            mapping=bwatch_python_data_context.transactions_data_mappers.copy(),
+            session_copy,
+            mapping=transactions_data_mappers_copy,
         )
 
         result = fetch_usecase_rules(
@@ -134,8 +140,8 @@ def process_as_middleware(session: SessionProperties):
         print(f"transaction mapper before mapping2-{bwatch_python_data_context.transactions_data_mappers}")
 
         transaction_data_dict = data_mapper(
-            data=session.body.copy(),
-            mapping=bwatch_python_data_context.transactions_data_mappers.copy(),
+            data=session_copy,
+            mapping=transactions_data_mappers_copy,
         )
 
         print(f"transaction dict before rule check -{transaction_data_dict}")

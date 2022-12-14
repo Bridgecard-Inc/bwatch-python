@@ -6,6 +6,8 @@ from ..utils.bwatch_data_context import bwatch_python_data_context
 
 from ..utils import constants
 
+import copy
+
 api_helper = ApiHelper()
 
 
@@ -63,8 +65,12 @@ def update_customer_verification_status_to_success(customer_id: str):
 
 def create_transaction(data: dict, mapping: dict):
 
+    data_copy = copy.deepcopy(data)
+
+    mapping_copy = copy.deepcopy(data)
+
     mapped_transaction = data_mapper(
-        data=data.copy(), mapping=mapping.copy()
+        data=data_copy, mapping=mapping_copy
     )
 
     transaction = Transaction(**mapped_transaction)
