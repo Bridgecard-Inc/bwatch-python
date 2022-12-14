@@ -16,10 +16,7 @@ def create_customer(data: dict):
         data=data, mapping=bwatch_python_data_context.customers_data_mappers
     )
 
-    # print(mapped_customer)
     customer = Customer(**mapped_customer)
-
-    # print(customer)
 
     response = api_helper.post(
         url=f"{constants.BWATCH_DATA_SERVICE_BASE_URL}/v1/bwatch_service/create-customer/{bwatch_python_data_context.app_id}",
@@ -72,12 +69,6 @@ def create_transaction(data: dict, mapping: dict):
     mapped_transaction = data_mapper(
         data=data_copy, mapping=mapping_copy
     )
-
-    print(f"data_copy - {data_copy}")
-
-    print(f"mapping_copy - {mapping_copy}")
-
-    print(f"mapped_transaction - {mapped_transaction}")
 
     transaction = Transaction(**mapped_transaction)
 

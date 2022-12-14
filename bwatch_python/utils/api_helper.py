@@ -17,13 +17,7 @@ class ApiHelper:
 
         self.headers["token"] = f"Bearer {bwatch_python_data_context.auth_token}"
 
-        print(data)
-
-        print(self.headers)
-
         response = requests.post(url=url, headers=self.headers, data=json.dumps(data))
-
-        print(response.text)
 
         if response.status_code == 200:
             return json.loads(response.text)

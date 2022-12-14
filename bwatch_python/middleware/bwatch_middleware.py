@@ -69,21 +69,13 @@ class BWatchAsgiMiddleware(BaseHTTPMiddleware):
             body=dict(jsonbody),
         )
 
-        print(session.url)
-
-        print(bwatch_python_data_context.url_to_track_on_middleware)
-
         enivronment = EnvironmentDetails(
             language="Python", version="", package="FASTAPI", other_details={}
         )
 
-        print(f"session dict before -{session.dict()}")
-
         if session.url == bwatch_python_data_context.url_to_track_on_middleware:
 
             response = process_as_middleware(session=session)
-
-            print(f"response-{response}")
 
             if response is not None:
 
@@ -96,15 +88,11 @@ class BWatchAsgiMiddleware(BaseHTTPMiddleware):
 
 def process_as_middleware(session: SessionProperties):
 
-    print(f"session dict after -{session.dict()}")
-
     fraudulent_customers_dict = bwatch_python_data_context.fraudulent_customers_dict
 
     id_to_track_on_middleware = bwatch_python_data_context.id_to_track_on_middleware
 
     id_to_track_on_middleware = session.body.get(id_to_track_on_middleware)
-
-    print(f"fraudulent_customers_dict-{fraudulent_customers_dict}")
 
     if id_to_track_on_middleware in fraudulent_customers_dict:
 
@@ -119,8 +107,6 @@ def process_as_middleware(session: SessionProperties):
         return response
 
     else:
-
-        print(f"transaction mapper before mapping1-{bwatch_python_data_context.transactions_data_mappers}")
 
         session_copy = copy.deepcopy(session.body)
 
@@ -137,14 +123,10 @@ def process_as_middleware(session: SessionProperties):
 
         usecase_rules = result.get("data")
 
-        print(f"transaction mapper before mapping2-{bwatch_python_data_context.transactions_data_mappers}")
-
         transaction_data_dict = data_mapper(
             data=session_copy,
             mapping=transactions_data_mappers_copy,
         )
-
-        print(f"transaction dict before rule check -{transaction_data_dict}")
 
         if usecase_rules:
 
@@ -184,8 +166,6 @@ def process_as_middleware(session: SessionProperties):
 
                         if rule_comparison_value == rule.value:
 
-                            print("RuleParameterEnum.DATA_COMPARISON_EQUAL_TO")
-
                             total_risk_score += int(rule.risk_score)
 
                     elif (
@@ -194,8 +174,6 @@ def process_as_middleware(session: SessionProperties):
                     ):
 
                         if rule_comparison_value != rule.value:
-
-                            print("RuleParameterEnum.DATA_COMPARISON_NOT_EQUAL_TO")
 
                             total_risk_score += int(rule.risk_score)
 
@@ -206,17 +184,11 @@ def process_as_middleware(session: SessionProperties):
 
                         if int(rule_comparison_value) > int(rule.value):
 
-                            print(rule_comparison_value, rule.value)
-
-                            print("RuleParameterEnum.DATA_MATCH_GREATER_THAN")
-
                             total_risk_score += int(rule.risk_score)
 
                     elif rule.parameter == RuleParameterEnum.DATA_MATCH_LESS_THAN:
 
                         if int(rule_comparison_value) < int(rule.value):
-
-                            print("RuleParameterEnum.DATA_MATCH_LESS_THAN")
 
                             total_risk_score += int(rule.risk_score)
 
@@ -227,8 +199,6 @@ def process_as_middleware(session: SessionProperties):
 
                         if rule_comparison_value in rule.value:
 
-                            print("RuleParameterEnum.DATA_COMPARISON_EXISTS_IN")
-
                             total_risk_score += int(rule.risk_score)
 
                     elif (
@@ -238,15 +208,11 @@ def process_as_middleware(session: SessionProperties):
 
                         if rule_comparison_value not in rule.value:
 
-                            print("RuleParameterEnum.DATA_COMPARISON_EXISTS_NOT_IN")
-
                             total_risk_score += int(rule.risk_score)
 
                     else:
 
                         continue
-
-            print(total_risk_score / total_rules_count)
 
             if int(total_risk_score / total_rules_count) > 70:
 
