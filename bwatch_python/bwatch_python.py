@@ -97,9 +97,11 @@ def __handle_stream_high_urgency_usecase_rules_dict(data: any):
 
         high_urgency_usecase_rules_dict = bwatch_python_data_context.high_urgency_usecase_rules_dict
 
-        high_urgency_usecase_rules_dict.pop(key)
+        if key in high_urgency_usecase_rules_dict:
 
-        bwatch_python_data_context.high_urgency_usecase_rules_dict = high_urgency_usecase_rules_dict
+            high_urgency_usecase_rules_dict.pop(key)
+
+            bwatch_python_data_context.high_urgency_usecase_rules_dict = high_urgency_usecase_rules_dict
 
     # Handle item updated event ('put', {'path': '/-NH6Q7PCCWU8P1JBgoev/created_at', 'data': 1668719845})
 
@@ -161,12 +163,14 @@ def __handle_stream_fraudulent_customers_dict(data: any):
 
             fraudulent_customers_dict = bwatch_python_data_context.fraudulent_customers_dict
 
-            fraudulent_customers_dict.pop(key)
+            if key in fraudulent_customers_dict:
 
-            print(fraudulent_customers_dict) 
+                fraudulent_customers_dict.pop(key)
 
-            bwatch_python_data_context.fraudulent_customers_dict = fraudulent_customers_dict
+                print(fraudulent_customers_dict) 
 
-            print(bwatch_python_data_context.fraudulent_customers_dict)
+                bwatch_python_data_context.fraudulent_customers_dict = fraudulent_customers_dict
+
+                print(bwatch_python_data_context.fraudulent_customers_dict)
 
     return
