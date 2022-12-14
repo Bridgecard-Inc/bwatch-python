@@ -124,6 +124,8 @@ def __handle_stream_high_urgency_usecase_rules_dict(data: any):
 
 def __handle_stream_fraudulent_customers_dict(data: any):
 
+    print(data)
+
     base_data = data[1]
 
     path = base_data.get("path")
@@ -144,7 +146,11 @@ def __handle_stream_fraudulent_customers_dict(data: any):
 
             fraudulent_customers_dict.update(data)
 
+            print(fraudulent_customers_dict)
+
             bwatch_python_data_context.fraudulent_customers_dict = fraudulent_customers_dict
+
+            print(bwatch_python_data_context.fraudulent_customers_dict)
 
 
     elif len(path_list) == 1:
@@ -155,8 +161,12 @@ def __handle_stream_fraudulent_customers_dict(data: any):
 
             fraudulent_customers_dict = bwatch_python_data_context.fraudulent_customers_dict
 
-            fraudulent_customers_dict.pop(key) 
+            fraudulent_customers_dict.pop(key)
+
+            print(fraudulent_customers_dict) 
 
             bwatch_python_data_context.fraudulent_customers_dict = fraudulent_customers_dict
+
+            print(bwatch_python_data_context.fraudulent_customers_dict)
 
     return
