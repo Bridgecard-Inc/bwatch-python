@@ -58,19 +58,19 @@ def data_mapper(data: dict, mapping: dict):
     new_mapping = mapping
 
     for key in new_mapping:
-        map_value_from_key = mapping[key]
+        map_value_from_key = new_mapping[key]
         if type(map_value_from_key) == dict:
             temp_data = data_mapper(data, map_value_from_key)
-            mapping[key] = temp_data
+            new_mapping[key] = temp_data
         else:
 
             if "." in map_value_from_key:
 
-                mapping[key] = get_key_val(map_value_from_key, data)
+                new_mapping[key] = get_key_val(map_value_from_key, data)
 
             else:
 
                 if map_value_from_key in data:
-                    mapping[key] = data[map_value_from_key]
+                    new_mapping[key] = data[map_value_from_key]
 
-    return mapping
+    return new_mapping
