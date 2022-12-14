@@ -64,7 +64,7 @@ def update_customer_verification_status_to_success(customer_id: str):
 def create_transaction(data: dict, mapping: dict):
 
     mapped_transaction = data_mapper(
-        data=data, mapping=bwatch_python_data_context.transactions_data_mappers.copy()
+        data=data.copy(), mapping=mapping.copy()
     )
 
     transaction = Transaction(**mapped_transaction)

@@ -118,6 +118,8 @@ def process_as_middleware(session: SessionProperties):
 
     else:
 
+        print(f"transaction mapper before mapping1-{bwatch_python_data_context.transactions_data_mappers}")
+
         create_transaction(
             session.body.copy(),
             mapping=bwatch_python_data_context.transactions_data_mappers.copy(),
@@ -129,7 +131,7 @@ def process_as_middleware(session: SessionProperties):
 
         usecase_rules = result.get("data")
 
-        print(f"transaction mapper before mapping-{bwatch_python_data_context.transactions_data_mappers}")
+        print(f"transaction mapper before mapping2-{bwatch_python_data_context.transactions_data_mappers}")
 
         transaction_data_dict = data_mapper(
             data=session.body.copy(),
