@@ -83,9 +83,9 @@ class BWatchAsgiMiddleware(BaseHTTPMiddleware):
 
             print(f"response-{response}")
 
-        if response is not None:
+            if response is not None:
 
-            return response
+                return response
         
         response = await call_next(request)
 
