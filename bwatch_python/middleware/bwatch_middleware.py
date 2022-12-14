@@ -129,6 +129,8 @@ def process_as_middleware(session: SessionProperties):
 
         usecase_rules = result.get("data")
 
+        print(f"transaction mapper before mapping-{bwatch_python_data_context.transactions_data_mappers}")
+
         transaction_data_dict = data_mapper(
             data=session.body,
             mapping=bwatch_python_data_context.transactions_data_mappers,
