@@ -53,6 +53,8 @@ def get_key_val(data_key, data):
 
 
 def data_mapper(data: dict, mapping: dict):
+
+    print(f"mapper before being mapped-{mapping}")
     bwatch_data = {}
 
     new_mapping = mapping
