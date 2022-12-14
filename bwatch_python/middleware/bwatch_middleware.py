@@ -75,7 +75,7 @@ class BWatchAsgiMiddleware(BaseHTTPMiddleware):
             language="Python", version="", package="FASTAPI", other_details={}
         )
 
-        print(session.dict())
+        print(f"session dict before -{session.dict()}")
 
         if session.url == bwatch_python_data_context.url_to_track_on_middleware:
 
@@ -93,6 +93,8 @@ class BWatchAsgiMiddleware(BaseHTTPMiddleware):
 
 
 def process_as_middleware(session: SessionProperties):
+
+    print(f"session dict after -{session.dict()}")
 
     fraudulent_customers_dict = bwatch_python_data_context.fraudulent_customers_dict
 
