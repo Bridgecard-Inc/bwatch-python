@@ -55,7 +55,9 @@ def get_key_val(data_key, data):
 def data_mapper(data: dict, mapping: dict):
     bwatch_data = {}
 
-    for key in mapping:
+    new_mapping = mapping
+
+    for key in new_mapping:
         map_value_from_key = mapping[key]
         if type(map_value_from_key) == dict:
             temp_data = data_mapper(data, map_value_from_key)
