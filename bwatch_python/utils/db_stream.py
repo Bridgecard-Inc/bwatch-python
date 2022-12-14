@@ -4,6 +4,7 @@ import requests
 import json
 import threading
 import socket
+from ..utils.bwatch_data_context import bwatch_python_data_context
 
 
 class ClosableSSEClient(SSEClient):
@@ -78,7 +79,8 @@ def dbURL(URL):
             URL = URL + '/.json'
         else:
             URL = URL + '.json'
-    return URL
+    print(URL + f"?auth={bwatch_python_data_context.secret_key}")
+    return URL + f"?auth={bwatch_python_data_context.secret_key}"
 
 
 class subscriber:

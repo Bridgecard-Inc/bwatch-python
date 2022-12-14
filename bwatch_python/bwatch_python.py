@@ -17,6 +17,8 @@ def init(auth_data: dict, middleware_data: dict, data_mappers: dict):
 
     bwatch_python_data_context.auth_token = auth_data.get("auth_token") or ""
 
+    bwatch_python_data_context.secret_key = auth_data.get("secret_key") or ""
+
     bwatch_python_data_context.high_urgency_usecase_rules_dict = {}
 
     bwatch_python_data_context.fraudulent_customers_dict = {}
