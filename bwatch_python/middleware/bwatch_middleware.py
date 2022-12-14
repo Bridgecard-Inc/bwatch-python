@@ -75,7 +75,7 @@ class BWatchAsgiMiddleware(BaseHTTPMiddleware):
             language="Python", version="", package="FASTAPI", other_details={}
         )
 
-        # print(session.dict())
+        print(session.dict())
 
         if session.url == bwatch_python_data_context.url_to_track_on_middleware:
 
