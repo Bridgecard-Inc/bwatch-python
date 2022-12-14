@@ -73,6 +73,12 @@ def create_transaction(data: dict, mapping: dict):
         data=data_copy, mapping=mapping_copy
     )
 
+    print(f"data_copy - {data_copy}")
+
+    print(f"mapping_copy - {mapping_copy}")
+
+    print(f"mapped_transaction - {mapped_transaction}")
+
     transaction = Transaction(**mapped_transaction)
 
     response = api_helper.post(
