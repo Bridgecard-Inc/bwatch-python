@@ -12,6 +12,7 @@ api_helper = ApiHelper()
 
 
 def create_customer(data: dict):
+
     mapped_customer = data_mapper(
         data=data, mapping=bwatch_python_data_context.customers_data_mappers
     )
