@@ -70,5 +70,6 @@ def data_mapper(data: dict, mapping: dict):
 
                 if map_value_from_key in data:
                     mapping[key] = data[map_value_from_key]
-
+    
     return mapping
+

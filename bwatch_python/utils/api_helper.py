@@ -19,6 +19,8 @@ class ApiHelper:
 
         response = requests.post(url=url, headers=self.headers, data=json.dumps(data))
 
+        # print(json.loads(response.text))
+
         if response.status_code == 200:
             return json.loads(response.text)
         else:
