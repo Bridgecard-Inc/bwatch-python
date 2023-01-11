@@ -13,8 +13,14 @@ api_helper = ApiHelper()
 
 def create_customer(data: dict):
 
+    data_copy = copy.deepcopy(data)
+
+    customers_data_mappers_copy = copy.deepcopy(
+        bwatch_python_data_context.transactions_data_mappers
+    )
+
     mapped_customer = data_mapper(
-        data=data, mapping=bwatch_python_data_context.customers_data_mappers
+        data=data_copy, mapping=customers_data_mappers_copy
     )
 
     customer = Customer(**mapped_customer)
