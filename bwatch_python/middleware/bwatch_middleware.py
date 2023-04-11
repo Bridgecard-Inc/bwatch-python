@@ -6,6 +6,7 @@ import json
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import Response
+from ..database.redis import CustomRedisHandler
 
 from bwatch_python.utils.api_helper import ApiHelper
 from bwatch_python.utils import constants
@@ -87,7 +88,9 @@ class BWatchAsgiMiddleware(BaseHTTPMiddleware):
 
 def _process_as_middleware(session: SessionProperties):
 
-    fraudulent_customers_dict = bwatch_python_data_context.fraudulent_customers_dict
+    custom_redis_handler = CustomRedisHandler(username=bwatch_python_data_context.app_id,password=bwatch_python_data_context.secret_key)
+
+    fraudulent_customers_dict = custom_redis_handler.fetch_fraudulent_customers_dict()
 
     id_to_track_on_middleware = bwatch_python_data_context.id_to_track_on_middleware
 
@@ -119,7 +122,7 @@ def _process_as_middleware(session: SessionProperties):
         )
 
         result = fetch_usecase_rules(
-            rules=bwatch_python_data_context.high_urgency_usecase_rules_dict
+            rules=custom_redis_handler.fetch_high_urgency_usecase_rules_dict()
         )
 
         usecase_rules = result.get("data")
@@ -284,8 +287,6 @@ def process_as_middleware(url: str, body: dict):
             data=session_copy,
             mapping=transactions_data_mappers_copy,
         )
-
-        print(transaction_data_dict)
 
         if usecase_rules:
 
