@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bwatch-python"
-version = "0.3.1"
+version = "0.3.2"
 authors = ["Bridgecard <engineerin@bridgecard.co>"]
 description = "Bwatch is an internal transaction monitoring service for fraudulent transactions in realtime."
 readme = "README.md"

@@ -39,6 +39,8 @@ class ApiHelper:
 
     def patch(self, url: str, data: Optional[dict] = {}):
 
+        self.headers["token"] = f"{bwatch_python_data_context.auth_token}"
+
         response = requests.patch(url=url, headers=self.headers, data=json.dumps(data))
 
         if response.status_code == 200:
