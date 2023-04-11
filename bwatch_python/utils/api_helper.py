@@ -28,7 +28,7 @@ class ApiHelper:
 
     def delete(self, url: str):
 
-        self.headers["token"] = f"{bwatch_python_data_context.auth_token}"
+        self.headers["token"] = f"Bearer {bwatch_python_data_context.auth_token}"
 
         response = requests.delete(url=url, headers=self.headers)
 
@@ -39,7 +39,7 @@ class ApiHelper:
 
     def patch(self, url: str, data: Optional[dict] = {}):
 
-        self.headers["token"] = f"{bwatch_python_data_context.auth_token}"
+        self.headers["token"] = f"Bearer {bwatch_python_data_context.auth_token}"
 
         response = requests.patch(url=url, headers=self.headers, data=json.dumps(data))
 
