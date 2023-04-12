@@ -9,7 +9,7 @@ class CustomRedisHandler():
 
         password = "Bwatch-00@"+ password[:118]
 
-        print(username, password)
+        # print(username, password)
 
         redis_client = redis.Redis(
             host=REDIS_DB_URL,
@@ -28,7 +28,7 @@ class CustomRedisHandler():
         
         if not data:
 
-            return None
+            return {}
 
         else:
 
@@ -40,7 +40,7 @@ class CustomRedisHandler():
         
         if not data:
 
-            return None
+            return {}
 
         else:
 
