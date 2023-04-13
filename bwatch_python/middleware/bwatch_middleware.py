@@ -92,11 +92,13 @@ def _process_as_middleware(session: SessionProperties):
 
     fraudulent_customers_dict = custom_redis_handler.fetch_fraudulent_customers_dict()
 
+    # print(fraudulent_customers_dict)
+
     id_to_track_on_middleware = bwatch_python_data_context.id_to_track_on_middleware
 
     id_to_track_on_middleware = session.body.get(id_to_track_on_middleware)
 
-    if id_to_track_on_middleware in fraudulent_customers_dict:
+    if id_to_track_on_middleware in fraudulent_customers_dict and fraudulent_customers_dict.get(id_to_track_on_middleware):
 
         session.body = {
             "message": "This user has been flagged for fruad by our system, please contact card issuer"
@@ -252,7 +254,7 @@ def process_as_middleware(url: str, body: dict):
 
     id_to_track_on_middleware = session.body.get(id_to_track_on_middleware)
 
-    if id_to_track_on_middleware in fraudulent_customers_dict:
+    if id_to_track_on_middleware in fraudulent_customers_dict and fraudulent_customers_dict.get(id_to_track_on_middleware):
 
         session.body = {
             "message": "This user has been flagged for fruad by our system, please contact card issuer"

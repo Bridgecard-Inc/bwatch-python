@@ -24,7 +24,7 @@ class CardTypeEnum(str, Enum):
 class CardData(BaseModel):
     card_id: Optional[str]
     card_number: Optional[str]
-    card_type: Optional[CardTypeEnum]
+    card_type: Optional[str]
     name_on_card: Optional[str]
 
 

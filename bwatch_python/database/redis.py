@@ -32,7 +32,7 @@ class CustomRedisHandler():
 
         else:
 
-            return data.get("HIGH")
+            return data.get("HIGH")  or {}
 
     def fetch_fraudulent_customers_dict(self):
 
@@ -44,7 +44,7 @@ class CustomRedisHandler():
 
         else:
 
-            return data.get("FRAUDULENT_CUSTOMERS")
+            return data.get("FRAUDULENT_CUSTOMERS") or {}
 
 
 
