@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bwatch-python"
-version = "0.3.5"
+version = "0.3.6"
 authors = ["Bridgecard <engineerin@bridgecard.co>"]
 description = "Bwatch is an internal transaction monitoring service for fraudulent transactions in realtime."
 readme = "README.md"
@@ -16,7 +16,7 @@ python = ">=3.7,<4"
 sseclient = "^0.0.27"
 requests = "^2.28.1"
 aioredis = "2.0.0"
-starlette = "^0.22.0"
+starlette = "^0.24.0"
 pydantic = "^1.10.2"
 redis = "^4.5.1"
 sse-starlette = "0.10.3"
